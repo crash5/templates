@@ -1,0 +1,54 @@
+[build-system]
+requires = ['poetry-core']
+build-backend = 'poetry.core.masonry.api'
+
+[tool.poetry]
+name = '{{ cookiecutter.project_slug }}'
+version = '{{ cookiecutter.project_version }}'
+description = '{{ cookiecutter.project_short_description }}'
+license = 'Proprietary'
+authors = ['{{ cookiecutter.project_author }}']
+readme = 'README.md'
+packages = [
+    { include = '{{ cookiecutter.package_name }}', from = 'src' },
+]
+
+####################
+# Dependencies
+####################
+
+[tool.poetry.dependencies]
+python = '^3.11,<3.12'
+
+[tool.poetry.group.dev.dependencies]
+pytest = '*'
+pytest-cov = '*'
+mypy = '*'
+
+####################
+# External tools
+####################
+
+[tool.pytest.ini_options]
+addopts = '--quiet -r A --import-mode=importlib --cov=src --cov-report term --cov-report html --cov-fail-under 90'
+testpaths = ['tests']
+
+[tool.mypy]
+strict = true
+check_untyped_defs = true
+
+# disallow_any_expr = true
+disallow_any_generics = true
+disallow_any_unimported = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+enable_error_code = 'redundant-expr, truthy-bool, truthy-iterable, unused-awaitable'
+no_implicit_optional = true
+show_column_numbers = true
+show_error_codes = true
+strict_equality = true
+strict_optional = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true

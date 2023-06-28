@@ -18,7 +18,11 @@ packages = [
 ####################
 
 [tool.poetry.dependencies]
-python = '^3.11,<3.12'
+python = '{{ cookiecutter.python_version_constraint }}'
+# pyyaml = '*'
+# azure-core = '*'
+# azure-identity = '*'
+# azure-storage-blob = '*'
 
 [tool.poetry.group.dev.dependencies]
 pytest = '*'
@@ -33,15 +37,23 @@ mypy = '*'
 addopts = '--quiet -r A --import-mode=importlib --cov=src --cov-report term --cov-report html --cov-fail-under 90'
 testpaths = ['tests']
 
+[tool.pydeps]
+reverse = true
+include_missing = true
+exclude = ['yaml', 'pandas', 'os', 're', 'sys', 'collections', '__future__']
+
 [tool.mypy]
+files = ['src/']
+pretty = true
 strict = true
 check_untyped_defs = true
 
+disallow_untyped_defs = true
+allow_untyped_calls = false
 # disallow_any_expr = true
 disallow_any_generics = true
 disallow_any_unimported = true
 disallow_incomplete_defs = true
-disallow_untyped_defs = true
 enable_error_code = 'redundant-expr, truthy-bool, truthy-iterable, unused-awaitable'
 no_implicit_optional = true
 show_column_numbers = true

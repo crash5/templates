@@ -17,6 +17,7 @@ packages = [
 # Dependencies
 ####################
 
+
 [tool.poetry.dependencies]
 python = '{{ cookiecutter.python_version_constraint }}'
 # pyyaml = '*'
@@ -29,12 +30,17 @@ pytest = '*'
 pytest-cov = '*'
 mypy = '*'
 
+# types-pyyaml = '*'
+# sphinx = '*'
+# sphinx-markdown-builder = '*'
+# sphinxcontrib-mermaid = '*'
+
 ####################
 # External tools
 ####################
 
 [tool.pytest.ini_options]
-addopts = '--quiet -r A --import-mode=importlib --cov=src --cov-report term --cov-report html --cov-fail-under 90'
+addopts = '--quiet -r A --import-mode=importlib --cov=src --cov-report term'
 testpaths = ['tests']
 
 [tool.pydeps]

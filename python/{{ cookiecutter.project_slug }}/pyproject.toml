@@ -17,7 +17,6 @@ packages = [
 # Dependencies
 ####################
 
-
 [tool.poetry.dependencies]
 python = '{{ cookiecutter.python_version_constraint }}'
 # pyyaml = '*'
@@ -29,6 +28,11 @@ python = '{{ cookiecutter.python_version_constraint }}'
 pytest = '*'
 pytest-cov = '*'
 mypy = '*'
+flake8 = '*'
+flake8-pyproject = '*'
+bandit = '*'
+pylint = '*'
+# pip-audit = '*'
 
 # types-pyyaml = '*'
 # sphinx = '*'
@@ -40,13 +44,16 @@ mypy = '*'
 ####################
 
 [tool.pytest.ini_options]
-addopts = '--quiet -r A --import-mode=importlib --cov=src --cov-report term'
+addopts = '--quiet -r A --import-mode=importlib'
 testpaths = ['tests']
 
 [tool.pydeps]
 reverse = true
 include_missing = true
 exclude = ['yaml', 'pandas', 'os', 're', 'sys', 'collections', '__future__']
+
+[tool.flake8]
+max-line-length = 200
 
 [tool.mypy]
 files = ['src/']

@@ -8,7 +8,9 @@ declare -r SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -
 mkdir -p "${OUTPUT_DIR}"
 
 poetry build --format=wheel
-poetry export --only=main --without-hashes --without-urls -o "${OUTPUT_DIR}"/requirements.txt
+poetry export --only=main --without-hashes -o "${OUTPUT_DIR}"/requirements.txt
+# FIXME(crash): when using internal repo add username to the internal repo url in the requirements.txt file (https://crash@pkgs...)
+# read -p "Press enter to continue after added username to the internal url in requirements.txt eg: https://crash@pkgs..."
 poetry run python -m pip download --requirement "${OUTPUT_DIR}"/requirements.txt --only-binary=:all: --dest "${OUTPUT_DIR}"/packages
 # running from CI maybe needs to specify platform and version: --platform win_amd64 --python-version 38
 

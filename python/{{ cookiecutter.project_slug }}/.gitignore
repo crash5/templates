@@ -1,6 +1,6 @@
 .vscode
-
 .venv
+VERSION
 
 .mypy_cache/
 .pytest_cache/

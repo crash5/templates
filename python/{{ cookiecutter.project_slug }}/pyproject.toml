@@ -1,10 +1,10 @@
 [build-system]
-requires = ['poetry-core']
+requires = ['poetry-core>=1.0.0']
 build-backend = 'poetry.core.masonry.api'
 
 [tool.poetry]
 name = '{{ cookiecutter.project_slug }}'
-version = '{{ cookiecutter.project_version }}'
+version = '0.0.0'
 description = '{{ cookiecutter.project_short_description }}'
 license = 'Proprietary'
 authors = ['{{ cookiecutter.project_author }}']
@@ -12,10 +12,15 @@ readme = 'README.md'
 packages = [
     { include = '{{ cookiecutter.package_name }}', from = 'src' },
 ]
+# dynamic = ['version']
+include = [
+    'src/{{ cookiecutter.package_name }}/VERSION'
+]
 
 ####################
 # Dependencies
 ####################
+
 
 [tool.poetry.dependencies]
 python = '{{ cookiecutter.python_version_constraint }}'
@@ -23,6 +28,7 @@ python = '{{ cookiecutter.python_version_constraint }}'
 # azure-core = '*'
 # azure-identity = '*'
 # azure-storage-blob = '*'
+# pandas = '*'
 
 [tool.poetry.group.dev.dependencies]
 pytest = '*'
@@ -30,18 +36,37 @@ pytest-cov = '*'
 mypy = '*'
 flake8 = '*'
 flake8-pyproject = '*'
-bandit = '*'
-pylint = '*'
+# bandit = '*'
+# pylint = '*'
 # pip-audit = '*'
+# pandas-stubs = '*'
 
 # types-pyyaml = '*'
 # sphinx = '*'
 # sphinx-markdown-builder = '*'
 # sphinxcontrib-mermaid = '*'
 
-####################
-# External tools
-####################
+#############################
+# External tool configuration
+#############################
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[tool.poetry-dynamic-versioning.substitution]
+patterns = [
+    '()0.0.0-non-production-ready()'  # 2 empty capturing group because we don't want to keep anything around the pattern
+]
+files = [
+    '*/VERSION'
+]
+folders = [
+    { path = 'src' }
+]
+
+[tool.poetry-dynamic-versioning.files.'src/{{ cookiecutter.package_name }}/VERSION']
+persistent-substitution = true
+initial-content = '0.0.0-non-production-ready'
 
 [tool.pytest.ini_options]
 addopts = '--quiet -r A --import-mode=importlib'

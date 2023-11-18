@@ -2,8 +2,7 @@
     "project_name": "",
     "project_short_description": "",
     "python_version": "3.11",
-    "python_version_constraint": "~{{ cookiecutter.python_version }}",
-    "project_version": "0.1.0",
+    "python_version_constraint": "^{{ cookiecutter.python_version }}",
     "project_author": "",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
     "package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}"

@@ -12,25 +12,37 @@
 
 ## Basic commands to manage project
 
-- Install for use
-    - Poetry: `poetry install --without dev --sync`
-    - Pip from package (recommended to do it in a virtual environment)
-        1. Create a virtualenv: `python -m venv .venv`
-        2. Activate virtualenv: `source .venv/Scripts/activate`
-        3. Install: `python -m pip install <package-name.whl>`
-- Install for development
-    - Install: `poetry install --sync`
-    - Create package: `poetry build`
-    - Create offline-install package into 'release' directory: `./tools/create-offline-package.sh`
-    - Run test: `poetry run python -m pytest`
-        - Run test and generate html coverage report: `poetry run python -m pytest --cov=src --cov-report term --cov-report html`
-    - Run mypy typecheck: `poetry run python -m mypy`
-    - Run flake8 style check: `poetry run python -m flake8 ./src`
+General Commands:
+- Install with Poetry: `poetry install --without dev --sync`
+- Install with Pip from package (recommended to do it in a virtual environment)
+    1. Create a virtualenv: `python -m venv .venv`
+    2. Activate virtualenv: `source .venv/Scripts/activate`
+    3. Install: `python -m pip install <package-name.whl>`
 
 
 ## Example run
 
+- Show command-line help: `poetry run python -m {{ cookiecutter.package_name }} -h`
 - Example app run: `poetry run python -m {{ cookiecutter.package_name }} 5 3`
+
+
+## For development
+
+Install [poetry](https://python-poetry.org/docs/#installation) and [poetry dynamic versioning](https://github.com/mtkennerly/poetry-dynamic-versioning) package.
+
+```
+(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+poetry self add "poetry-dynamic-versioning[plugin]"
+```
+
+General Commands:
+- Install: `poetry install --sync`
+- Create package: `poetry build`
+- Create offline-install package into 'release' directory: `./tools/create-offline-package.sh`
+- Run test: `poetry run python -m pytest`
+    - Run test and generate html coverage report: `poetry run python -m pytest --cov=src --cov-report term --cov-report html`
+- Run mypy typecheck: `poetry run python -m mypy`
+- Run flake8 style check: `poetry run python -m flake8 ./src`
 
 
 ## Troubleshooting

@@ -1,17 +1,17 @@
-'''
+"""
 Returns the content of the VERSION file.
 VERSION file has to be in the source root next to this file.
-'''
+"""
 
 from importlib import import_module
 from pathlib import Path
 import importlib.resources as pkg_resources
 
 
-_UNKNOW_VERSION: str = '0.0.0-non-production-ready'
+_UNKNOW_VERSION: str = "0.0.0-non-production-ready"
 
 
-def _read_text(package, filename) -> str:
+def _read_text(package: str, filename: str) -> str:
     pkg = import_module(package)
     try:
         # from python 3.9
@@ -29,10 +29,10 @@ def version_string() -> str:
     try:
         if pkg_name := __package__:
             # if used as a package
-            version = _read_text(pkg_name, 'VERSION')
+            version = _read_text(pkg_name, "VERSION")
         else:
             # if not used as a package
-            version_file = Path(__file__).parent / 'VERSION'
+            version_file = Path(__file__).parent / "VERSION"
             version = version_file.read_text()
     except:  # noqa: E722
         # use the default string if we can't read the version

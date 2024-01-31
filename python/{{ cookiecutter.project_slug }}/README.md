@@ -9,15 +9,19 @@
 
 - Azure Blob Storage
 
+## Quick Start
+
+...
 
 ## Basic commands to manage project
 
 General Commands:
-- Install with Poetry: `poetry install --without dev --sync`
 - Install with Pip from package (recommended to do it in a virtual environment)
     1. Create a virtualenv: `python -m venv .venv`
     2. Activate virtualenv: `source .venv/Scripts/activate`
-    3. Install: `python -m pip install <package-name.whl>`
+    3. Install: `python -m pip install {{ cookiecutter.package_name }}`
+
+- Install with Poetry: `poetry install --without dev --sync`
 
 
 ## Example run
@@ -57,18 +61,11 @@ poetry install --sync
 ```
 
 
-### `The Poetry configuration is invalid: - [source.0] Additional properties are not allowed ('priority' was unexpected)`
-
-Update poetry with one of these commands:
-- `poetry self update`
-- `(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -`
-- `curl -sSL https://install.python-poetry.org | python -`
-
-
 ## Additional links
 
 - https://www.python.org/
 - https://python-poetry.org/
+- https://github.com/mtkennerly/poetry-dynamic-versioning
 
 ## Glossary
 

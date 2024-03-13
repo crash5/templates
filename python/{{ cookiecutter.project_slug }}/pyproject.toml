@@ -21,7 +21,6 @@ include = [
 # Dependencies
 ####################
 
-
 [tool.poetry.dependencies]
 python = "{{ cookiecutter.python_version_constraint }}"
 # pyyaml = "*"
@@ -39,7 +38,6 @@ mypy = "*"
 flake8 = "*"
 flake8-pyproject = "*"
 black = "*"
-isort = "*"
 # bandit = "*"
 # pylint = "*"
 # pip-audit = "*"
@@ -110,3 +108,4 @@ warn_unused_ignores = true
 [tool.isort]
 profile = "black"
 src_paths = ["src", "tests"]
+

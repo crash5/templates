@@ -9,8 +9,8 @@ mkdir -p "${OUTPUT_DIR}"
 
 poetry build --format=wheel
 poetry export --only=main --without-hashes -o "${OUTPUT_DIR}"/requirements.txt
-# FIXME(username): when using internal repo add username to the internal repo url in the requirements.txt file (https://username@pkgs...)
-# read -p "Press enter to continue after added username to the internal url in requirements.txt eg: https://username@pkgs..."
+# FIXME: when using internal repo add username to the internal repo url in the requirements.txt file (https://user@pkgs...)
+# read -p "Press enter to continue after added username to the internal url in requirements.txt eg: https://user@pkgs..."
 poetry run python -m pip download --requirement "${OUTPUT_DIR}"/requirements.txt --only-binary=:all: --dest "${OUTPUT_DIR}"/packages
 # running from CI maybe needs to specify platform and version: --platform win_amd64 --python-version 38
 
@@ -74,3 +74,4 @@ If you installed the app into a virtual environment you can open a command promp
 
 After installation you can test it with the command `python -m {{ cookiecutter.package_name }} -h` which shows the command line help message.
 EOF
+

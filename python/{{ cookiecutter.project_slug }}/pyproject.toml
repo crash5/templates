@@ -38,9 +38,10 @@ mypy = "*"
 flake8 = "*"
 flake8-pyproject = "*"
 black = "*"
-# bandit = "*"
+isort = "*"
+bandit = "*"
+pip-audit = "*"
 # pylint = "*"
-# pip-audit = "*"
 # pandas-stubs = "*"
 
 # types-pyyaml = "*"
@@ -81,6 +82,7 @@ exclude = ["yaml", "pandas", "os", "re", "sys", "collections", "__future__"]
 
 [tool.flake8]
 max-line-length = 200
+extend-ignore = "E203, E701"
 
 [tool.mypy]
 files = ["src/"]

@@ -1,0 +1,94 @@
+trigger:
+  - none
+
+# trigger:
+#   batch: true
+#   branches:
+#     include:
+#       - main
+#   tags:
+#     include:
+#       - v*
+
+variables:
+  - name: isVersionTag
+    value: $[startsWith(variables['Build.SourceBranch'], 'refs/tags/v')]
+
+strategy:
+  matrix:
+    Python39:
+      python.version: "3.9"
+      # createRelease: $(isVersionTag)
+      createRelease: false
+    Python311:
+      python.version: "3.11"
+      createRelease: false
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "$(python.version)"
+    displayName: "Use Python $(python.version)"
+
+  - script: |
+      pip install poetry
+      poetry config virtualenvs.in-project true
+      poetry install
+    displayName: "Install poetry"
+
+  - script: |
+      poetry install
+    displayName: "Install"
+
+  - script: |
+      poetry run python -m pytest
+    displayName: "Run tests (pytest)"
+
+# Optional
+  - script: |
+      poetry run pip-audit -v
+    continueOnError: true
+    displayName: "Run package audit (pip-audit)"
+
+  - script: |
+      poetry run python -m mypy
+    continueOnError: true
+    displayName: "Run typecheck (mypy)"
+
+  - script: |
+      poetry run python -m flake8 ./src
+    continueOnError: true
+    displayName: "Run static code analysis (flake8)"
+
+  # - script: |
+  #     poetry run pylint --rcfile=.pylintrc ./src
+  #   continueOnError: true
+  #   displayName: "Run static code analysis (pylint)"
+
+  - script: |
+      poetry run bandit -r -lll ./src
+    continueOnError: true
+    displayName: "Run static code analysis (bandit)"
+
+# Package creation and upload
+  - task: TwineAuthenticate@1
+    inputs:
+      artifactFeed: PythonPackages
+    condition: and(succeeded(), eq(variables.createRelease, true))
+    displayName: Twine Authenticate
+
+  - script: |
+      python -m pip install twine poetry-dynamic-versioning
+      poetry-dynamic-versioning
+      poetry build
+    condition: and(succeeded(), eq(variables.createRelease, true))
+    displayName: Build python package
+
+  - script: |
+      python -m twine upload -r PythonPackages --config-file $(PYPIRC_PATH) dist/*.whl --verbose
+    condition: and(succeeded(), eq(variables.createRelease, true))
+    displayName: Upload python package
+

@@ -1,5 +1,8 @@
 import argparse
 import logging
+import datetime
+from pathlib import Path
+from typing import Optional, Union
 
 from {{ cookiecutter.package_name }}.add_numbers import add_numbers
 import {{ cookiecutter.package_name }}.version as ver
@@ -8,7 +11,7 @@ import {{ cookiecutter.package_name }}.version as ver
 logger = logging.getLogger(__name__)
 
 
-def main():
+def handle_command_line() -> None:
     version = ver.version_string()
     logger.info(f"{{ cookiecutter.package_name }} version: v{version}")
 
@@ -20,6 +23,15 @@ def main():
     )
 
     parser.add_argument("integers", metavar="N", type=int, nargs=2, help="Two numbers to sum.")
+
+    # parser.add_argument(
+    #     "-j",
+    #     "--jsonConfig",
+    #     required=False,
+    #     help="Path to the configuration file or folder. Folder must contain exactly one JSON file.",
+    #     type=Path,
+    # )
+    #
     args = parser.parse_args()
 
     a = args.integers[0]
@@ -29,7 +41,7 @@ def main():
     print(add_numbers(a, b))
 
 
-def setup_logger():
+def setup_logger(file_path: Optional[Union[str, Path]] = None) -> None:
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
 
@@ -42,12 +54,14 @@ def setup_logger():
     sh.setFormatter(lf)
     root_logger.addHandler(sh)
 
-    # fh = logging.FileHandler("log.txt")
-    # fh.setLevel(logging.DEBUG)
-    # fh.setFormatter(lf)
-    # root_logger.addHandler(fh)
+    if file_path and Path(file_path).is_dir():
+        date_for_log = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        fh = logging.FileHandler(f"{file_path}/{date_for_log}.log")
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(lf)
+        root_logger.addHandler(fh)
 
 
 if __name__ == "__main__":
     setup_logger()
-    main()
+    handle_command_line()

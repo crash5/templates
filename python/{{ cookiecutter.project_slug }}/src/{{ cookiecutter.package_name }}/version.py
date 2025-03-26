@@ -3,12 +3,11 @@ Returns the content of the VERSION file.
 VERSION file has to be in the source root next to this file.
 """
 
+import importlib.resources as pkg_resources
 from importlib import import_module
 from pathlib import Path
-import importlib.resources as pkg_resources
 
-
-_UNKNOW_VERSION: str = "0.0.0-non-production-ready"
+_UNKNOWN_VERSION: str = "0.0.0-non-production-ready"
 
 
 def _read_text(package: str, filename: str) -> str:
@@ -24,7 +23,7 @@ def _read_text(package: str, filename: str) -> str:
 
 
 def version_string() -> str:
-    version: str = _UNKNOW_VERSION
+    version: str = _UNKNOWN_VERSION
 
     try:
         if pkg_name := __package__:
@@ -36,6 +35,6 @@ def version_string() -> str:
             version = version_file.read_text()
     except:  # noqa: E722
         # use the default string if we can't read the version
-        pass
+        version = _UNKNOWN_VERSION
 
     return version.strip()

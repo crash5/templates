@@ -7,7 +7,15 @@ TBD: Project brief descrioption
 
 - From the repository with pip
 ```sh
-python -m pip install {{ cookiecutter.package_name }}
+python -m pip install {{ cookiecutter.project_slug }}
+```
+
+- As a dependency (pyproject.toml)
+```toml
+[project]
+dependencies = [
+    "{{ cookiecutter.project_slug }}",
+]
 ```
 
 - Locally from source with poetry

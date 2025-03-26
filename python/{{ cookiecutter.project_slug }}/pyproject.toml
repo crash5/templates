@@ -1,53 +1,50 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry]
+[project]
 name = "{{ cookiecutter.project_slug }}"
-version = "0.0.0"
+requires-python = "{{ cookiecutter.python_version_constraint }}"
+dynamic = ["version"]
+authors = [{ name = "{{ cookiecutter.project_author }}" }]
 description = "{{ cookiecutter.project_short_description }}"
-license = "Proprietary"
-authors = ["{{ cookiecutter.project_author }}"]
+license = "LicenseRef-Proprietary"
 readme = "README.md"
+dependencies = [
+    "polars>=1.24",
+    # "openpyxl",
+    # "pandas",
+    # "pyyaml",
+    # "azure-core",
+    # "azure-identity",
+    # "azure-storage-blob"
+]
+
+[tool.poetry]
+requires-poetry = ">=2.0"
 packages = [
-    { include = "{{ cookiecutter.package_name }}", from = "src" },
+    { include = "{{ cookiecutter.package_name }}", from = "src" }
 ]
-# dynamic = ["version"]
 include = [
-    "src/{{ cookiecutter.package_name }}/VERSION"
+    { path = "src/{{ cookiecutter.package_name }}/VERSION", format = ["sdist", "wheel"] }
 ]
+version = "0.0.0" # base version, dynamically set by plugin
 
-####################
-# Dependencies
-####################
-
-[tool.poetry.dependencies]
-python = "{{ cookiecutter.python_version_constraint }}"
-# pyyaml = "*"
-# azure-core = "*"
-# azure-identity = "*"
-# azure-storage-blob = "*"
-# pandas = "*"
-# polars = "*"
+[tool.poetry.requires-plugins]
+poetry-dynamic-versioning = "*"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "*"
-pytest-cov = "*"
-pytest-repeat = "*"
-mypy = "*"
+black = "*"
 flake8 = "*"
 flake8-pyproject = "*"
-black = "*"
 isort = "*"
-bandit = "*"
-pip-audit = "*"
-# pylint = "*"
-# pandas-stubs = "*"
-
+mypy = "*"
+pytest = "*"
+# pytest-cov = "*"
+# pytest-repeat = "*"
 # types-pyyaml = "*"
-# sphinx = "*"
-# sphinx-markdown-builder = "*"
-# sphinxcontrib-mermaid = "*"
+# types-openpyxl = "*"
+# pandas-stubs = "*"
 
 #############################
 # External tool configuration
@@ -72,30 +69,54 @@ persistent-substitution = true
 initial-content = "0.0.0-non-production-ready"
 
 [tool.pytest.ini_options]
-addopts = "--quiet -r A --import-mode=importlib"
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+    "--showlocals",
+    "--quiet",
+    "-r A",
+    "--import-mode=importlib"
+]
 testpaths = ["tests"]
+markers = [
+    "flaky: Possibly needs a few runs to be passing the test.",
+    "slow: Slow test"
+]
 
 [tool.pydeps]
-reverse = true
 include_missing = true
-exclude = ["yaml", "pandas", "os", "re", "sys", "collections", "__future__"]
+reverse = true
+exclude = [
+    "__future__",
+    "collections",
+    "os",
+    "pandas",
+    "polars",
+    "pyodbc",
+    "re",
+    "sys",
+    "yaml"
+]
 
 [tool.flake8]
 max-line-length = 200
-extend-ignore = "E203, E701"
+extend-ignore = [
+    "E203", # Whitespace before ":"
+    "E701"  # Multiple statements on one line
+]
 
 [tool.mypy]
 files = ["src/"]
+check_untyped_defs = true
 pretty = true
 strict = true
-check_untyped_defs = true
 
-disallow_untyped_defs = true
 allow_untyped_calls = false
 # disallow_any_expr = true
 disallow_any_generics = true
 disallow_any_unimported = true
 disallow_incomplete_defs = true
+disallow_untyped_defs = true
 enable_error_code = "redundant-expr, truthy-bool, truthy-iterable, unused-awaitable"
 no_implicit_optional = true
 show_column_numbers = true

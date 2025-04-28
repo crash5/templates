@@ -5,5 +5,7 @@
     "python_version_constraint": ">={{ cookiecutter.python_version }}",
     "project_author": "",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
-    "package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}"
+    "package_name": "{{ cookiecutter.project_slug.replace('-', '_') }}",
+    "package_repo_name": "",
+    "package_repo_url": ""
 }

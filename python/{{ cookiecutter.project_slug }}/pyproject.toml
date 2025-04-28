@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "{{ cookiecutter.project_slug }}"
 requires-python = "{{ cookiecutter.python_version_constraint }}"
 dynamic = ["version"]
-authors = [{ name = "{{ cookiecutter.project_author }}" }]
+authors = [ { name = "{{ cookiecutter.project_author }}" } ]
 description = "{{ cookiecutter.project_short_description }}"
 license = "LicenseRef-Proprietary"
 readme = "README.md"

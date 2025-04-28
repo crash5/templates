@@ -7,15 +7,23 @@ TBD: Project brief descrioption
 
 - From the repository with pip
 ```sh
-python -m pip install {{ cookiecutter.project_slug }}
+python -m pip install {{ cookiecutter.project_slug }} --index-url {{ cookiecutter.package_repo_url }}
 ```
 
-- As a dependency (pyproject.toml)
+- As a dependency for Poetry project (pyproject.toml)
 ```toml
 [project]
 dependencies = [
     "{{ cookiecutter.project_slug }}",
 ]
+
+[[tool.poetry.source]]
+name = "{{ cookiecutter.package_repo_name }}"
+url = "{{ cookiecutter.package_repo_url }}"
+priority = "explicit"
+
+[tool.poetry.dependencies]
+{{ cookiecutter.project_slug }} = {source = "{{ cookiecutter.package_repo_name }}"}
 ```
 
 - Locally from source with poetry
@@ -42,19 +50,10 @@ poetry self add "poetry-dynamic-versioning[plugin]"
 General Commands:
 - Install: `poetry install --sync`
 - Create package: `poetry build`
-- Create offline-install package into "release" directory: `./tools/create-offline-package.sh`
+- Create offline-install package into "dist-offline" directory: `./tools/create-offline-package.sh`
+- Create manual-copy-install package into "dist-manual" directory: `./tools/create-manual-copy-package.sh`
 - Run test: `poetry run python -m pytest`
     - Run test and generate html coverage report: `poetry run python -m pytest --cov=src --cov-report term --cov-report html`
 - Run mypy typecheck: `poetry run python -m mypy`
 - Run flake8 style check: `poetry run python -m flake8 ./src`
 - Run black code formatter: `poetry run black ./src`
-
-
-## Additional links
-
-TBD
-
-
-## Definitions
-
-TBD

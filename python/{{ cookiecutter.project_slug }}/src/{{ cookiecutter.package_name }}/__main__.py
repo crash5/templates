@@ -2,6 +2,7 @@ import argparse
 import logging
 import datetime
 from pathlib import Path
+import sys
 from typing import Optional, Union
 
 from {{ cookiecutter.package_name }}.add_numbers import add_numbers
@@ -49,10 +50,15 @@ def setup_logger(file_path: Optional[Union[str, Path]] = None) -> None:
         fmt="%(asctime)s [%(levelname)-8s] %(message)s [logger=%(name)s process_id=%(process)d file=%(filename)s line=%(lineno)d]"
     )
 
-    sh = logging.StreamHandler()
-    sh.setLevel(logging.DEBUG)
-    sh.setFormatter(lf)
-    root_logger.addHandler(sh)
+    sh_out = logging.StreamHandler(sys.stdout)
+    sh_out.setLevel(logging.DEBUG)
+    sh_out.setFormatter(lf)
+    root_logger.addHandler(sh_out)
+
+    sh_err = logging.StreamHandler(sys.stderr)
+    sh_err.setLevel(logging.WARNING)
+    sh_err.setFormatter(lf)
+    root_logger.addHandler(sh_err)
 
     if file_path and Path(file_path).is_dir():
         date_for_log = datetime.datetime.now().strftime("%Y%m%d%H%M%S")

@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-declare -r OUTPUT_DIR="./release"
+declare -r OUTPUT_DIR="./dist-offline"
 declare -r SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 mkdir -p "${OUTPUT_DIR}"
@@ -51,7 +51,7 @@ EOF
 
 
 cat << 'EOF' > "${OUTPUT_DIR}"/README.md.txt
-# {{ cookiecutter.project_name }} OnDemand Desktop (ODD) install package
+# {{ cookiecutter.project_name }} offline install package
 
 ## Install
 

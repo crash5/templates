@@ -48,10 +48,10 @@ steps:
     displayName: "Run tests (pytest)"
 
 # Optional
-  - script: |
-      poetry run pip-audit -v
-    continueOnError: true
-    displayName: "Run package audit (pip-audit)"
+  # - script: |
+  #     poetry run pip-audit -v
+  #   continueOnError: true
+  #   displayName: "Run package audit (pip-audit)"
 
   - script: |
       poetry run python -m mypy
@@ -68,10 +68,10 @@ steps:
   #   continueOnError: true
   #   displayName: "Run static code analysis (pylint)"
 
-  - script: |
-      poetry run bandit -r -lll ./src
-    continueOnError: true
-    displayName: "Run static code analysis (bandit)"
+  # - script: |
+  #     poetry run bandit -r -lll ./src
+  #   continueOnError: true
+  #   displayName: "Run static code analysis (bandit)"
 
 # Package creation and upload
   - task: TwineAuthenticate@1

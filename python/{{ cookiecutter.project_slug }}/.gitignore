@@ -2,6 +2,7 @@
 .venv/
 /src/{{ cookiecutter.package_name }}/VERSION
 /log/
+/dist-manual/
 
 .mypy_cache/
 .pytest_cache/

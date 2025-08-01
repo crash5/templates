@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 def handle_command_line() -> None:
+    setup_logger("./log")
+
     version = ver.version_string()
     logger.info(f"{{ cookiecutter.package_name }} version: v{version}")
 
@@ -38,8 +40,11 @@ def handle_command_line() -> None:
     a = args.integers[0]
     b = args.integers[1]
 
-    logger.info(f"The two numbers are {a} and {b}")
-    print(add_numbers(a, b))
+    try:
+        logger.info(f"The two numbers are {a} and {b}")
+        print(add_numbers(a, b))
+    except Exception as e:
+        logger.exception(e)
 
 
 def setup_logger(file_path: Optional[Union[str, Path]] = None) -> None:
@@ -49,6 +54,7 @@ def setup_logger(file_path: Optional[Union[str, Path]] = None) -> None:
     lf = logging.Formatter(
         fmt="%(asctime)s [%(levelname)-8s] %(message)s [logger=%(name)s process_id=%(process)d file=%(filename)s line=%(lineno)d]"
     )
+    # lf.converter = time.gmtime  # for UTC time
 
     sh_out = logging.StreamHandler(sys.stdout)
     sh_out.setLevel(logging.DEBUG)
@@ -69,5 +75,4 @@ def setup_logger(file_path: Optional[Union[str, Path]] = None) -> None:
 
 
 if __name__ == "__main__":
-    setup_logger()
     handle_command_line()

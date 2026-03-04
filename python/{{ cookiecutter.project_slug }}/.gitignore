@@ -1,4 +1,6 @@
 .vscode/
+.idea/
+
 .venv/
 /src/{{ cookiecutter.package_name }}/VERSION
 /log/

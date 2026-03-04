@@ -79,7 +79,7 @@ addopts = [
 ]
 testpaths = ["tests"]
 markers = [
-    "flaky: Possibly needs a few runs to be passing the test.",
+    "flaky: Possibly needs a few runs to be passing the test",
     "slow: Slow test"
 ]
 
@@ -99,11 +99,16 @@ exclude = [
 ]
 
 [tool.flake8]
+exclude = ["tests"]
 max-line-length = 200
 extend-ignore = [
     "E203", # Whitespace before ":"
     "E701"  # Multiple statements on one line
 ]
+
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests"]
 
 [tool.mypy]
 files = ["src/"]
@@ -127,8 +132,3 @@ warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
-
-[tool.isort]
-profile = "black"
-src_paths = ["src", "tests"]
-

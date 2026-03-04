@@ -45,6 +45,7 @@ def handle_command_line() -> None:
         print(add_numbers(a, b))
     except Exception as e:
         logger.exception(e)
+        raise
 
 
 def setup_logger(file_path: Optional[Union[str, Path]] = None) -> None:

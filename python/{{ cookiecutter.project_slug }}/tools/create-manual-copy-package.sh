@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-poetry-dynamic-versioning
+poetry dynamic-versioning
 
 declare -r OUTPUT_DIR="./dist-manual"
 
